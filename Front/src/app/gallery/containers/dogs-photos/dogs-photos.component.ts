@@ -9,6 +9,7 @@ import { map, tap } from 'rxjs/operators';
 import { Photo } from '../../shared/models/photo';
 import { DogsFilterValues } from '../../shared/models/dogs-filter-values';
 import { latLng, marker, tileLayer, icon, Marker } from 'leaflet';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dogs-photos',
@@ -21,7 +22,7 @@ export class DogsPhotosComponent implements OnInit {
   isMapOpen = false;
   currentPage = 1;
   allPages: number;
-  photos: Photo[];
+  photos: any[] = [];
   photoToShow: Photo;
   geoPosition: Position;
   pointers$: Observable<Marker[]>;
@@ -41,35 +42,24 @@ export class DogsPhotosComponent implements OnInit {
   };
 
   constructor(private searchService: FlickSearchService,
-              private router: Router) {
+              private router: Router,
+              private httpClient: HttpClient) {
   }
 
   ngOnInit() {
+    this.getNewPhotos();
   }
 
-  getNewPhotos(filterValues?: DogsFilterValues) {
+  getNewPhotos() {
     this.isLoading = true;
-    let url = '';
 
-    if (filterValues) {
-      url = this.searchService.prepareUrlFromSingleValueFilter(filterValues.license, 'license');
-      url = url + this.searchService.prepareUrlFromSingleValueFilter(filterValues.search, 'text');
-      url = url + this.searchService.prepareUrlFromColorFilter(filterValues.colors);
-    }
-
-    this.searchService.getPhotos(url)
-      .pipe(
-        tap((photosReq) => {
-          this.isLoading = false;
-          this.currentPage = photosReq.photos.page;
-          this.allPages = photosReq.photos.pages;
-        }),
-        map((photosReq) => photosReq.photos.photo)
-      ).subscribe((photos) => {
-      this.photos = photos;
-    });
+    this.httpClient.get('https://localhost:8443/blob/get/0')
+      .subscribe((resp: any) => {
+        this.isLoading = false;
+        console.log(resp)
+        this.photos = resp;
+      });
   }
-
   loadMorePhotos() {
     if (this.allPages <= this.currentPage) {
       return;

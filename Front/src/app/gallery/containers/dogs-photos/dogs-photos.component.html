@@ -18,7 +18,7 @@
   <!--</ng-container>-->
 <!--</div>-->
 
-<app-photo [photo]=mockedPhoto></app-photo>
+<app-photos [photos]="photos"></app-photos>
 
 <div *ngIf="photos && photos.length === 0 ">
   There are no photos matching your filters

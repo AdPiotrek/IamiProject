@@ -17,7 +17,7 @@ const routes: Routes = [
       { path: 'photo-upload', component: PhotoUploadComponent },
       { path: 'sun-info', component: SunInfoComponent },
       { path: 'login', component: LoginComponent },
-      {path: 'register', component: RegisterComponent}
+      { path: 'register', component: RegisterComponent }
     ]
   }
 ];

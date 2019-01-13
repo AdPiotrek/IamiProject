@@ -1,6 +1,6 @@
 <ng-container *ngIf="photo">
   <img class="img"
-       [src]="photo.src"
+       [src]="photoSrc | async"
        alt="">
   <div class="author" (click)="onAuthorClicked()">
   </div>

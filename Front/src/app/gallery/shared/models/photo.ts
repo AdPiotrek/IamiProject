@@ -14,4 +14,5 @@
 
 export interface Photo {
   src: string;
+  blobid: string;
 }

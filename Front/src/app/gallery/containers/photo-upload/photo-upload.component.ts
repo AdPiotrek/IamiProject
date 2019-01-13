@@ -23,6 +23,9 @@ export class PhotoUploadComponent implements OnInit {
   }
 
   ngOnInit() {
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      this.cords = coords;
+    });
   }
 
   fileRejected() {
@@ -69,9 +72,9 @@ export class PhotoUploadComponent implements OnInit {
       .append('latitude', this.cords.latitude)
       .append('longtitude', this.cords.longitude);
 
-    this.httpClient.post(`https://localhost:8443/blob`, wrappedFile,)
+    this.httpClient.post(`https://localhost:8443/blob`, wrappedFile, {params})
       .subscribe((resp) => {
-          console.log(resp)
+          console.log(resp);
         },
         (err) => {
           if (err.status === 409) {
