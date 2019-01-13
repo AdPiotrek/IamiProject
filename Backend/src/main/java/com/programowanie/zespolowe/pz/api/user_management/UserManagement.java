@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Api do zarządzania użytkownikami.
@@ -104,6 +105,34 @@ public class UserManagement implements UserManagementAPI {
             }
         }
         return ResponseEntity.status(HttpStatus.OK).body(users);
+    }
+
+    @Override
+    public ResponseEntity getUserById(@PathVariable(value = "userId") int userId){
+        Optional<User> user = userDAO.findById(userId);
+        if(user.isPresent()) {
+            User userGet = user.get();
+            FilteredUserDTO filteredUserDTO = new FilteredUserDTO(userGet.getUserid(), userGet.getEmail(), userGet.getName(), userGet.getSurname());
+            return ResponseEntity.status(HttpStatus.OK).body(filteredUserDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @Override
+    public ResponseEntity editUser(@RequestParam(value = "name", required=false, defaultValue = "") String name,
+                                   @RequestParam(value = "surname", required=false, defaultValue = "") String surname,
+                                   @RequestParam(value = "email", required=false, defaultValue = "") String email,
+                                   @RequestParam(value = "password", required=false, defaultValue = "") String password,
+                                   @RequestHeader HttpHeaders headers){
+//        Optional<User> user = userDAO.findById();
+//        if(user.isPresent()) {
+//            User userGet = user.get();
+//            FilteredUserDTO filteredUserDTO = new FilteredUserDTO(userGet.getUserid(), userGet.getEmail(), userGet.getName(), userGet.getSurname());
+//            return ResponseEntity.status(HttpStatus.OK).body(filteredUserDTO);
+//        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
     }
 
 
