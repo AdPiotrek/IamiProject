@@ -15,7 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ModalComponent } from './shared/modal/modal.component';
 
 import { SwingErrorHandlerService } from './core/services/error-handler/swing-error-handler.service';
-import { FlickApiInterceptorService } from './core/services/interceptor/flick-api-interceptor.service';
+import { AuthInterceptorService } from './core/services/interceptor/flick-api-interceptor.service';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ToastrModule } from 'ngx-toastr';
@@ -29,13 +29,15 @@ import {
   MatIconModule,
   MatListModule,
   MatInputModule,
-  MatDatepickerModule, MatNativeDateModule
+  MatDatepickerModule, MatNativeDateModule, MatCardModule
 } from '@angular/material';
 import { PhotoUploadComponent } from './gallery/containers/photo-upload/photo-upload.component';
 import { CommonModule } from '@angular/common';
 import { InputFileModule } from 'ngx-input-file';
 import { SunInfoComponent } from './gallery/containers/sun-info/sun-info.component';
-import { LineChartModule, NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { LoginComponent } from './gallery/containers/login/login.component';
+import { RegisterComponent } from './gallery/containers/register/register.component';
 
 
 @NgModule({
@@ -51,6 +53,8 @@ import { LineChartModule, NgxChartsModule } from '@swimlane/ngx-charts';
     NavigationComponent,
     PhotoUploadComponent,
     SunInfoComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     CommonModule,
@@ -76,6 +80,7 @@ import { LineChartModule, NgxChartsModule } from '@swimlane/ngx-charts';
     MatDatepickerModule,
     MatNativeDateModule,
     NgxChartsModule,
+    MatCardModule
   ],
   providers: [
     {
@@ -84,7 +89,7 @@ import { LineChartModule, NgxChartsModule } from '@swimlane/ngx-charts';
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: FlickApiInterceptorService,
+      useClass: AuthInterceptorService,
       multi: true
     }
   ],

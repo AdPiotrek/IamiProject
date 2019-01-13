@@ -12,17 +12,16 @@ import * as sunCalc from 'suncalc';
 export class SunInfoComponent implements OnInit {
   days = [
     {
-      name: 'Golden Hour Start',
+      name: 'Golden Hour',
       series: []
     },
     {
-      name: 'Golden Hours End',
+      name: 'Blue hour',
       series: []
     }
-  ]
+  ];
   xFormatter = (val) => {
-    console.log(val)
-    return val.toString().slice(0, 2) + ':' + val.toString().slice(2)
+    return `${ val.toString().slice(0, 2) }:${ val.toString().slice(2) }`;
   };
 
 
@@ -33,18 +32,25 @@ export class SunInfoComponent implements OnInit {
 
     navigator.geolocation.getCurrentPosition(({ coords }) => {
       const newDate = new Date();
+      console.log(sunCalc.getTimes(new Date(newDate.getFullYear(), newDate.getMonth(), 1), coords.latitude, coords.longitude));
       const numberOfDaysInMonth = this.getDaysInMonth(newDate.getFullYear(), newDate.getMonth());
       for (let i = 1; i <= numberOfDaysInMonth; i++) {
-        console.log();
         this.days[0].series.push({
-          name: this.datePipe.transform(new Date(newDate.getFullYear(), newDate.getMonth(), i), 'MxaMM:dd'),
+          name: this.datePipe.transform(new Date(newDate.getFullYear(), newDate.getMonth(), i), 'MMM:dd'),
           value: this.datePipe.transform(
             sunCalc.getTimes(new Date(newDate.getFullYear(), newDate.getMonth(), i), coords.latitude, coords.longitude).goldenHour,
             'HHmm'
           )
-        })
+        });
+        this.days[1].series.push({
+          name: this.datePipe.transform(new Date(newDate.getFullYear(), newDate.getMonth(), i), 'MMM:dd'),
+          value: this.datePipe.transform(
+            sunCalc.getTimes(new Date(newDate.getFullYear(), newDate.getMonth(), i), coords.latitude, coords.longitude).goldenHourEnd,
+            'HHmm'
+          )
+        });
       }
-    })
+    });
 
 
   }

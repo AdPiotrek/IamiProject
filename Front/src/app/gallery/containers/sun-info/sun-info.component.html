@@ -5,17 +5,45 @@
                          [xAxis]="true"
                          [yAxis]="true"
                          [showGridLines]="false"
-                          [autoScale]="true"
-                          [xAxisTickFormatting]="xFormatter"
-                          [yAxisTickFormatting]="xFormatter">
+                         [autoScale]="true"
+                         [xAxisTickFormatting]="xFormatter"
+                         [yAxisTickFormatting]="xFormatter">
     <ng-template #tooltipTemplate let-model="model">
       Godzina: {{
-        xFormatter(model.value)
+      xFormatter(model.value)
       }}
       <br>
       Dzień: {{
-        model.name
+      model.name
       }}
+    </ng-template>
+
+    <ng-template #seriesTooltipTemplate let-model="model">
+      Golden Hour:
+      <br>
+      Godzina: {{
+      xFormatter(model[0].value)
+      }}
+      <br>
+      Dzień: {{
+      model[0].name
+      }}
+      <br>
+      <br>
+
+      Blue Hour:
+      <br>
+      Godzina: {{
+      xFormatter(model[1].value)
+      }}
+      <br>
+      Dzień: {{
+      model[1].name
+      }}
+      <br>
+
+
+
     </ng-template>
   </ngx-charts-line-chart>
 

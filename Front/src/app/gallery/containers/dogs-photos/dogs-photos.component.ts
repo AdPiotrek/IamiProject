@@ -45,7 +45,6 @@ export class DogsPhotosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getNewPhotos();
   }
 
   getNewPhotos(filterValues?: DogsFilterValues) {
