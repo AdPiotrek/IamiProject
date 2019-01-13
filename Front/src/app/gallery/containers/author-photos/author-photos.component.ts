@@ -36,28 +36,13 @@ export class AuthorPhotosComponent implements OnInit {
           this.isLoading = false;
           console.log(photosReq);
         }),
-        map((photosReq) => photosReq.photos.photo)
-      ).subscribe((photos) => {
+      ).subscribe((photos: Photo[]) => {
       this.photos = photos;
     });
   }
 
   loadMorePhotos() {
-    if (this.allPages <= this.currentPage) {
-      return;
-    }
 
-    this.searchService.getMorePhotos(++this.currentPage)
-      .pipe(
-        tap((photosReq) => {
-          this.isLoading = false;
-          this.currentPage = photosReq.photos.page;
-          this.allPages = photosReq.photos.pages;
-        }),
-        map((photosReq) => photosReq.photos.photo)
-      ).subscribe((photos) => {
-      this.photos = photos;
-    });
   }
 
 }

@@ -7,6 +7,7 @@ import { PhotoUploadComponent } from './gallery/containers/photo-upload/photo-up
 import { SunInfoComponent } from './gallery/containers/sun-info/sun-info.component';
 import { LoginComponent } from './gallery/containers/login/login.component';
 import { RegisterComponent } from './gallery/containers/register/register.component';
+import { UserSearchComponent } from './gallery/containers/user-search/user-search.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dogs', pathMatch: 'full' },
@@ -17,7 +18,8 @@ const routes: Routes = [
       { path: 'photo-upload', component: PhotoUploadComponent },
       { path: 'sun-info', component: SunInfoComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent }
+      { path: 'register', component: RegisterComponent },
+      { path: 'user-search', component: UserSearchComponent}
     ]
   }
 ];

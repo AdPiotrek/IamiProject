@@ -39,6 +39,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { LoginComponent } from './gallery/containers/login/login.component';
 import { RegisterComponent } from './gallery/containers/register/register.component';
 import { NgxMasonryModule } from 'ngx-masonry';
+import { UserSearchComponent } from './gallery/containers/user-search/user-search.component';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { NgxMasonryModule } from 'ngx-masonry';
     SunInfoComponent,
     LoginComponent,
     RegisterComponent,
+    UserSearchComponent,
   ],
   imports: [
     CommonModule,
