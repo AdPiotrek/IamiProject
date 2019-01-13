@@ -51,12 +51,7 @@ public class BlobManagement implements BlobAPI{
             return commonUtil.getResponseEntity("User not found.", HttpStatus.NOT_FOUND);
         }
         try{
-            Blob existingName = blobDAO.findByNameAndUser(fileName, user);
-            if(existingName == null){
-                persistBlob(fileName, user, file, description, longtitude, latitude, localizationUF);
-            } else {
-                return commonUtil.getResponseEntity("Duplicated blob name.", HttpStatus.CONFLICT);
-            }
+            persistBlob(fileName, user, file, description, longtitude, latitude, localizationUF);
         } catch (IOException e) {
             log.warn("Input stream fail.", e);
             return commonUtil.getResponseEntity("Malformed request body", HttpStatus.BAD_REQUEST);
@@ -103,7 +98,7 @@ public class BlobManagement implements BlobAPI{
     @Override
     public ResponseEntity getAllBlobs(@PathVariable("pageNumber") int pageNumber){
 
-        List<AlmostFullBlobDTO> test = blobDAO.getAlmostFullBlob(new PageRequest(pageNumber, 2));
+        List<AlmostFullBlobDTO> test = blobDAO.getAlmostFullBlob(new PageRequest(pageNumber, 40));
         return commonUtil.getListResponseEntity(test, HttpStatus.OK);
     }
 
