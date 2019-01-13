@@ -16,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Api do zarządzania użytkownikami.
  */
@@ -81,6 +84,26 @@ public class UserManagement implements UserManagementAPI {
         }
         FilteredUserDTO filteredUserDTO = new FilteredUserDTO(user.getUserid(), user.getEmail(), user.getName(), user.getSurname());
         return ResponseEntity.status(HttpStatus.OK).body(filteredUserDTO);
+    }
+
+    @Override
+    public ResponseEntity getAllUsers(@RequestParam("name") String name, @RequestHeader HttpHeaders headers) {
+        List<FilteredUserDTO> users;
+        if(name == null || name.isEmpty()){
+            users = userDAO.getAllUsers();
+        } else {
+            String [] splitedName = name.split(" ");
+            log.info(splitedName[0]);
+            if(splitedName.length == 1){
+                users = userDAO.getUserByNameAndSurname(splitedName[0]);
+            } else {
+                users = userDAO.getUserByNameAndSurname(splitedName[0], splitedName[1]);
+            }
+            if(users.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(users);
+            }
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
 
