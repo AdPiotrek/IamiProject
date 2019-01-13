@@ -36,8 +36,20 @@ public interface UserManagementAPI {
     public @ResponseBody
     ResponseEntity getUser(@RequestHeader HttpHeaders headers);
 
+    @RequestMapping(value = "/get/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    ResponseEntity getUserById(@PathVariable(value = "userId") int userId);
+
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getAllUsers(@RequestParam(value = "name", required=false, defaultValue = "") String name, @RequestHeader HttpHeaders headers);
+
+    @RequestMapping(value = "/edit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    ResponseEntity editUser(@RequestParam(value = "name", required=false, defaultValue = "") String name,
+                            @RequestParam(value = "surname", required=false, defaultValue = "") String surname,
+                            @RequestParam(value = "email", required=false, defaultValue = "") String email,
+                            @RequestParam(value = "password", required=false, defaultValue = "") String password,
+                            @RequestHeader HttpHeaders headers);
 
 }
