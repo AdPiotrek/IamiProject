@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -101,7 +102,7 @@ public class UserManagement implements UserManagementAPI {
                 users = userDAO.getUserByNameAndSurname(splitedName[0], splitedName[1]);
             }
             if(users.isEmpty()){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(users);
+                return ResponseEntity.status(HttpStatus.OK).body(new ArrayList<>());
             }
         }
         return ResponseEntity.status(HttpStatus.OK).body(users);
