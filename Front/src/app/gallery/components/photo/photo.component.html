@@ -1,9 +1,16 @@
-<ng-container *ngIf="photo">
+<ng-container *ngIf="photoSrc | async as src">
   <img class="img"
-       [src]="photoSrc | async"
-       alt="">
-  <div class="author" (click)="onAuthorClicked()">
-  </div>
-  <div class="date">
-  </div>
+       [src]="src"/>
+  <ng-container *ngIf="showDetails">
+    <div class="author" (click)="onAuthorClicked()">
+      {{photo.userName}} {{photo.userSurname}}
+    </div>
+    <div class="date">
+      {{photo.date | date: 'shortDate'}} {{photo.time}}
+    </div>
+    <div class="localization">
+      {{photo.localizationUF}}
+    </div>
+  </ng-container>
+
 </ng-container>

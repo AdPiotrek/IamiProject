@@ -21,8 +21,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class PhotoComponent implements OnInit {
   @Input() photo: Photo;
-  @Input() photoSize = 'n';
+  @Input() showDetails = true;
   @Output() authorClicked = new EventEmitter<string>();
+  loaded = false;
 
   photoSrc: Observable<any>;
 
@@ -39,14 +40,14 @@ export class PhotoComponent implements OnInit {
           return this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(resp));
         }),
         tap((url) => {
-          console.log(url);
+          this.loaded = true;
         })
       );
 
   }
 
   onAuthorClicked() {
-    this.authorClicked.emit(this.photo);
+    this.authorClicked.emit(this.photo.userId);
   }
 
 

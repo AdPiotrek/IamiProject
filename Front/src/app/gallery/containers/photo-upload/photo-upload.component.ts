@@ -70,15 +70,17 @@ export class PhotoUploadComponent implements OnInit {
       .append('description', this.description)
       .append('localizationUF', this.localization)
       .append('latitude', this.cords.latitude)
-      .append('longtitude', this.cords.longitude);
+      .append('longtitude', this.cords.longitude)
+      .append('date', this.date.toISOString())
+      .append('time', this.time);
 
-    this.httpClient.post(`https://localhost:8443/blob`, wrappedFile, {params})
+    this.httpClient.post(`https://localhost:8443/blob`, wrappedFile, { params })
       .subscribe((resp) => {
           console.log(resp);
         },
         (err) => {
           if (err.status === 409) {
-            this.growlService.addError('Zduplikowana nazwa pliku');
+            this.toastService.error('Zduplikowana nazwa pliku');
           }
         });
   }

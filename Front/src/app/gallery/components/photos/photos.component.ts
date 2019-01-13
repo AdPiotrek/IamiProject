@@ -17,6 +17,7 @@ import { Photo } from '../../shared/models/photo';
 })
 export class PhotosComponent implements OnInit {
   @Input() photos: Photo[];
+  @Input() showDetails = true;
   @Output() authorClicked = new EventEmitter<string>();
   @Output() photoClicked = new EventEmitter<Photo>();
 
@@ -37,5 +38,4 @@ export class PhotosComponent implements OnInit {
   photoIdentity(index, photo) {
     return photo.id;
   }
-
 }

@@ -6,6 +6,7 @@ import { FlickSearchService } from '../../services/search/flick-search.service';
 import { map, switchMap, tap } from 'rxjs/operators';
 
 import { Photo } from '../../shared/models/photo';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-author-photos',
@@ -14,11 +15,11 @@ import { Photo } from '../../shared/models/photo';
 })
 export class AuthorPhotosComponent implements OnInit {
   isLoading = false;
-  currentPage: number;
+  currentPage = 0;
   allPages: number;
   photos: Photo[];
 
-  constructor(private searchService: FlickSearchService,
+  constructor(private httpClient: HttpClient,
               private activatedRoute: ActivatedRoute) {
   }
 
@@ -30,11 +31,10 @@ export class AuthorPhotosComponent implements OnInit {
     this.isLoading = true;
     this.activatedRoute.params
       .pipe(
-        switchMap((params) => this.searchService.getAuthorPhotos(params['id'])),
+        switchMap((params) => this.httpClient.get(`https://localhost:8443/blob/user/${ params.id }/${ this.currentPage }`)),
         tap((photosReq) => {
           this.isLoading = false;
-          this.currentPage = photosReq.photos.page;
-          this.allPages = photosReq.photos.pages;
+          console.log(photosReq);
         }),
         map((photosReq) => photosReq.photos.photo)
       ).subscribe((photos) => {

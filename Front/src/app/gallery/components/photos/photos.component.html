@@ -1,4 +1,7 @@
-<ng-container *ngFor="let photo of photos; trackBy: photoIdentity">
-  <app-photo [photo]="photo" (click)="onPhotoClicked(photo)" (authorClicked)="onAuthorClicked($event)"></app-photo>
-</ng-container>
-
+<ngx-masonry [options]="{
+  transitionDuration: 0
+}">
+  <ngxMasonryItem class="masonry-item" *ngFor="let photo of photos; trackBy: photoIdentity">
+    <app-photo [photo]="photo" (click)="onPhotoClicked(photo)" (authorClicked)="onAuthorClicked($event)" [showDetails]="showDetails"> </app-photo>
+  </ngxMasonryItem>
+</ngx-masonry>

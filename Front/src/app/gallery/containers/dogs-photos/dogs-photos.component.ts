@@ -80,10 +80,12 @@ export class DogsPhotosComponent implements OnInit {
   }
 
   seeAuthorPhotos(authorId) {
+    console.log(authorId)
     this.router.navigateByUrl(`author/${ authorId }`);
   }
 
   showModalWithPhoto(photo: Photo) {
+    console.log(photo)
     this.photoToShow = photo;
     this.showModal = true;
   }
@@ -92,32 +94,32 @@ export class DogsPhotosComponent implements OnInit {
     this.showModal = false;
   }
 
-  openMaps() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.geoPosition = position;
-      this.isMapOpen = true;
-      this.pointers$ = this.searchService.getDogsLocalization(position)
-        .pipe(
-          map((dogs) => {
-            return dogs.map((dog) => {
-              return marker(latLng(+dog.latitude, +dog.longitude),
-                {
-                  title: dog.title, icon: icon({ iconUrl: 'marker-icon.png' })
-                });
-            });
-          })
-        );
+  // openMaps() {
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     this.geoPosition = position;
+  //     this.isMapOpen = true;
+  //     this.pointers$ = this.searchService.getDogsLocalization(position)
+  //       .pipe(
+  //         map((dogs) => {
+  //           return dogs.map((dog) => {
+  //             return marker(latLng(+dog.latitude, +dog.longitude),
+  //               {
+  //                 title: dog.title, icon: icon({ iconUrl: 'marker-icon.png' })
+  //               });
+  //           });
+  //         })
+  //       );
+  //
+  //     this.options.center = latLng(position.coords.latitude, position.coords.longitude);
+  //
+  //   }, err => {
+  //     if (err.code === 1) {
+  //       alert('You denied permissions, try to reset consents in your browser');
+  //     }
+  //   });
+  // }
 
-      this.options.center = latLng(position.coords.latitude, position.coords.longitude);
-
-    }, err => {
-      if (err.code === 1) {
-        alert('You denied permissions, try to reset consents in your browser');
-      }
-    });
-  }
-
-  closeMaps() {
-    this.isMapOpen = false;
-  }
+  // closeMaps() {
+  //   this.isMapOpen = false;
+  // }
 }

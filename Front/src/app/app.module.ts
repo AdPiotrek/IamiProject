@@ -38,6 +38,7 @@ import { SunInfoComponent } from './gallery/containers/sun-info/sun-info.compone
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { LoginComponent } from './gallery/containers/login/login.component';
 import { RegisterComponent } from './gallery/containers/register/register.component';
+import { NgxMasonryModule } from 'ngx-masonry';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { RegisterComponent } from './gallery/containers/register/register.compon
     MatDatepickerModule,
     MatNativeDateModule,
     NgxChartsModule,
-    MatCardModule
+    MatCardModule,
+    NgxMasonryModule
   ],
   providers: [
     {

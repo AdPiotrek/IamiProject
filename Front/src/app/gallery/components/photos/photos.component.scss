@@ -1,9 +1,15 @@
 :host {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  padding: 5px;
+  display: block;
+  min-height: calc(100vh - 64px);
 }
 
+ngx-masonry {
+  width: 100%;
+  min-height: 100% !important;
+}
+
+.masonry-item {
+  width: 32%;
+}
 
 
