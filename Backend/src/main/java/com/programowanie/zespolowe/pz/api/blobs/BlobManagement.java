@@ -106,6 +106,26 @@ public class BlobManagement implements BlobAPI{
         return commonUtil.getListResponseEntity(test, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity deleteBlob(@PathVariable("blobId") int blobId, @RequestHeader HttpHeaders headers){
+        User user = commonUtil.getUserFromHeader(headers);
+        if(user == null){
+            return commonUtil.getResponseEntity("User not found.", HttpStatus.NOT_FOUND);
+        }
+        Blob blob = blobDAO.findByBlobidAndUser(blobId, user);
+        if(blob != null) {
+            try {
+                blobDAO.deleteById(blobId);
+            } catch (Exception e) {
+                log.warn("Unknown error", e);
+                return commonUtil.getResponseEntity("Unknown exception.", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            return commonUtil.getResponseEntity("Blob not found for user.", HttpStatus.BAD_REQUEST);
+        }
+        return commonUtil.getResponseEntity("Blob deleted.", HttpStatus.OK);
+    }
+
 }
 
 

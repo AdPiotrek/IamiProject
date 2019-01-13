@@ -27,4 +27,6 @@ public interface BlobDAO extends JpaRepository<Blob,Integer> {
 
     Blob findByNameAndUser(String name, User u);
 
+    Blob findByBlobidAndUser(int blobid, User u);
+
 }

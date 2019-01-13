@@ -58,4 +58,8 @@ public interface BlobAPI {
     @RequestMapping(value = "/get/{pageNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     ResponseEntity getAllBlobs(@PathVariable(value = "pageNumber") int pageNumber);
+
+    @RequestMapping(value = "/delete/{blobId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    ResponseEntity deleteBlob(@PathVariable(value = "blobId") int blobId, @RequestHeader HttpHeaders headers);
 }
