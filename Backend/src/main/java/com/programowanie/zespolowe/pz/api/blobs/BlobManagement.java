@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -45,13 +47,15 @@ public class BlobManagement implements BlobAPI{
                                  @RequestParam("localizationUF") String localizationUF,
                                  @RequestParam("latitude") BigDecimal latitude,
                                  @RequestParam("longtitude") BigDecimal longtitude,
+                                 @RequestParam("date") @DateTimeFormat(pattern="yyyy-mm-dd") Date date,
+                                 @RequestParam("time") String time,
                                  @RequestHeader HttpHeaders headers){
         User user = commonUtil.getUserFromHeader(headers);
         if(user == null){
             return commonUtil.getResponseEntity("User not found.", HttpStatus.NOT_FOUND);
         }
         try{
-            persistBlob(fileName, user, file, description, longtitude, latitude, localizationUF);
+            persistBlob(fileName, user, file, description, longtitude, latitude, localizationUF, date, time);
         } catch (IOException e) {
             log.warn("Input stream fail.", e);
             return commonUtil.getResponseEntity("Malformed request body", HttpStatus.BAD_REQUEST);
@@ -63,7 +67,7 @@ public class BlobManagement implements BlobAPI{
     }
 
     public void persistBlob(String fileName, User user, MultipartFile file, String desc,
-                            BigDecimal longtitude, BigDecimal latitude, String localizationUF) throws IOException {
+                            BigDecimal longtitude, BigDecimal latitude, String localizationUF, Date date, String time) throws IOException {
         Blob blob = new Blob();
         blob.setName(fileName);
         blob.setUser(user);
@@ -72,6 +76,8 @@ public class BlobManagement implements BlobAPI{
         blob.setLongtitude(longtitude);
         blob.setLatitude(latitude);
         blob.setLocalizationUF(localizationUF);
+        blob.setDate(date);
+        blob.setTime(time);
         blobDAO.save(blob);
     }
 

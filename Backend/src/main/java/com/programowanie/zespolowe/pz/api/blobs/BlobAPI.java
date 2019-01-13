@@ -1,5 +1,6 @@
 package com.programowanie.zespolowe.pz.api.blobs;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Api do zarządzania plikami
@@ -29,6 +31,8 @@ public interface BlobAPI {
                           @RequestParam("localizationUF") String localizationUF,
                           @RequestParam("latitude") BigDecimal latitude,
                           @RequestParam("longtitude") BigDecimal longtitude,
+                          @RequestParam("date") @DateTimeFormat(pattern="yyyy-mm-dd") Date date,
+                          @RequestParam("time") String time,
                           @RequestHeader HttpHeaders headers);
 
     /**

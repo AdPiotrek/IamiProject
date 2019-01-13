@@ -1,8 +1,7 @@
 package com.programowanie.zespolowe.pz.model;
 
-import com.programowanie.zespolowe.pz.entities.User;
-
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class AlmostFullBlobDTO {
 
@@ -14,20 +13,9 @@ public class AlmostFullBlobDTO {
     private BigDecimal longtitude;
     private String userName;
     private int userId;
+    private Date date;
+    private String time;
 
-    public AlmostFullBlobDTO(int blobid, String name, String description, String localizationUF, BigDecimal latitude, BigDecimal longtitude, String userName, int userId) {
-        this.blobid = blobid;
-        this.name = name;
-        this.description = description;
-        this.localizationUF = localizationUF;
-        this.latitude = latitude;
-        this.longtitude = longtitude;
-        this.userName = userName;
-        this.userId = userId;
-    }
-
-    public AlmostFullBlobDTO(){
-    }
 
     public int getBlobid() {
         return blobid;
@@ -91,5 +79,34 @@ public class AlmostFullBlobDTO {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public AlmostFullBlobDTO(int blobid, String name, String description, String localizationUF, BigDecimal latitude, BigDecimal longtitude, String userName, int userId, Date date, String time) {
+        this.blobid = blobid;
+        this.name = name;
+        this.description = description;
+        this.localizationUF = localizationUF;
+        this.latitude = latitude;
+        this.longtitude = longtitude;
+        this.userName = userName;
+        this.userId = userId;
+        this.date = date;
+        this.time = time;
     }
 }
