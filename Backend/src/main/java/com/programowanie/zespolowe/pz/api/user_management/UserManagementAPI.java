@@ -4,11 +4,13 @@ import com.programowanie.zespolowe.pz.model.UserRegisterDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * Api do zarządzania użytkownikiem.
  */
+@Controller
 @RequestMapping("/user")
 public interface UserManagementAPI {
 
@@ -33,5 +35,9 @@ public interface UserManagementAPI {
     @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity getUser(@RequestHeader HttpHeaders headers);
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    ResponseEntity getAllUsers(@RequestParam(value = "name", required=false, defaultValue = "") String name, @RequestHeader HttpHeaders headers);
 
 }

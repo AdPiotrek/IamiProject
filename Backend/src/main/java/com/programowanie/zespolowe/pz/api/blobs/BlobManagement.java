@@ -92,12 +92,10 @@ public class BlobManagement implements BlobAPI{
     }
 
     @Override
-    public ResponseEntity getBlobsNamesAndIds(@RequestHeader HttpHeaders headers){
-        User user = commonUtil.getUserFromHeader(headers);
-        if(user == null){
-            return commonUtil.getResponseEntity("User not found.", HttpStatus.NOT_FOUND);
-        }
-        List<FilteredBlobDTO> test = blobDAO.getOnlyIdAndNameForUser(user);
+    public ResponseEntity getBlobsNamesAndIdsForUser(@PathVariable(value = "userId") int userId,
+                                                     @PathVariable(value = "pageNumber") int pageNumber,
+                                                     @RequestHeader HttpHeaders headers){
+        List<AlmostFullBlobDTO> test = blobDAO.getAlmostFullBlobForUser(new PageRequest(pageNumber, 40), userId);
         return commonUtil.getListResponseEntity(test, HttpStatus.OK);
     }
 
@@ -106,6 +104,26 @@ public class BlobManagement implements BlobAPI{
 
         List<AlmostFullBlobDTO> test = blobDAO.getAlmostFullBlob(new PageRequest(pageNumber, 40));
         return commonUtil.getListResponseEntity(test, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity deleteBlob(@PathVariable("blobId") int blobId, @RequestHeader HttpHeaders headers){
+        User user = commonUtil.getUserFromHeader(headers);
+        if(user == null){
+            return commonUtil.getResponseEntity("User not found.", HttpStatus.NOT_FOUND);
+        }
+        Blob blob = blobDAO.findByBlobidAndUser(blobId, user);
+        if(blob != null) {
+            try {
+                blobDAO.deleteById(blobId);
+            } catch (Exception e) {
+                log.warn("Unknown error", e);
+                return commonUtil.getResponseEntity("Unknown exception.", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            return commonUtil.getResponseEntity("Blob not found for user.", HttpStatus.BAD_REQUEST);
+        }
+        return commonUtil.getResponseEntity("Blob deleted.", HttpStatus.OK);
     }
 
 }

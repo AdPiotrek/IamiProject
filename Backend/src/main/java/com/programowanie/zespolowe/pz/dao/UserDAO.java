@@ -17,4 +17,16 @@ public interface UserDAO extends JpaRepository<User,Integer> {
     @Query(value ="SELECT new com.programowanie.zespolowe.pz.model.FilteredUserDTO(u.userid, u.email, u.name, u.surname) " +
             "FROM User u WHERE user = ?1")
     public List<FilteredUserDTO> getFilteredUser(User user);
+
+    @Query(value ="SELECT new com.programowanie.zespolowe.pz.model.FilteredUserDTO(u.userid, u.email, u.name, u.surname) " +
+            "FROM User u WHERE u.name LIKE ?1 OR u.surname LIKE ?2 OR u.name LIKE ?2 OR u.surname LIKE ?1")
+    public List<FilteredUserDTO> getUserByNameAndSurname(String userName, String surName);
+
+    @Query(value ="SELECT new com.programowanie.zespolowe.pz.model.FilteredUserDTO(u.userid, u.email, u.name, u.surname) " +
+            "FROM User u WHERE u.name LIKE ?1 OR u.surname LIKE ?1")
+    public List<FilteredUserDTO> getUserByNameAndSurname(String userName);
+
+    @Query(value ="SELECT new com.programowanie.zespolowe.pz.model.FilteredUserDTO(u.userid, u.email, u.name, u.surname) " +
+            "FROM User u")
+    public List<FilteredUserDTO> getAllUsers();
 }
