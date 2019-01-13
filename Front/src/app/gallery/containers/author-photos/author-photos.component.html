@@ -1,0 +1,13 @@
+<div class="sub-header">
+  <h2 class="author-description">
+    <ng-container *ngIf="photos">
+      Author: {{photos[0].ownername}}
+    </ng-container>
+  </h2>
+  <a class="btn btn-primary" routerLink="/dogs">Dogs photos</a>
+</div>
+<app-photos [photos]="photos"
+            infiniteScroll
+            (scrolled)="loadMorePhotos()"
+            [fromRoot]="true"
+></app-photos>

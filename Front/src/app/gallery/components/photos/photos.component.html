@@ -1,0 +1,4 @@
+<ng-container *ngFor="let photo of photos; trackBy: photoIdentity">
+  <app-photo [photo]="photo" (click)="onPhotoClicked(photo)" (authorClicked)="onAuthorClicked($event)"></app-photo>
+</ng-container>
+

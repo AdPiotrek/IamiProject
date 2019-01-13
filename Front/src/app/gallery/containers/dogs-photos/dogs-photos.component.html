@@ -1,0 +1,35 @@
+<!--<div class="maps-container">-->
+  <!--<div class="btn btn-dark btn-maps">-->
+  <!--<span (click)="openMaps()" *ngIf="!isMapOpen">-->
+    <!--Show dogs near your localization-->
+  <!--</span>-->
+    <!--<span (click)="closeMaps()" *ngIf="isMapOpen">-->
+    <!--Close maps-->
+  <!--</span>-->
+  <!--</div>-->
+  <!--<ng-container *ngIf="isMapOpen">-->
+    <!--<div style="height: 300px;"-->
+         <!--leaflet-->
+         <!--[leafletOptions]="options">-->
+      <!--<div *ngFor="let pointer of pointers$ | async"-->
+           <!--[leafletLayer]="pointer">-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</ng-container>-->
+<!--</div>-->
+
+<app-photo [photo]=mockedPhoto></app-photo>
+
+<div *ngIf="photos && photos.length === 0 ">
+  There are no photos matching your filters
+</div>
+<app-loader *ngIf="isLoading"></app-loader>
+<app-modal *ngIf="showModal" (backdropClicked)="closeModal()">
+  <app-photo [photo]="photoToShow" photoSize="c"></app-photo>
+  <div *ngIf="photoToShow && photoToShow.description._content.trim() !== ''"
+       class="photo-description"
+       [innerHTML]="photoToShow?.description._content">
+  </div>
+</app-modal>
+
+

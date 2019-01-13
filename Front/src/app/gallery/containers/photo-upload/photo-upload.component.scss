@@ -1,0 +1,29 @@
+.photo-upload-form {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 10%;
+}
+
+.input-file {
+  width: 100%;
+}
+
+.upload-button {
+  max-width: 150px;
+}
+
+:host ::ng-deep {
+
+  input-file {
+    .file-container,
+    .files-container,
+    .file-button {
+      width: 100% !important;
+    }
+
+    label[for="ngx-input-file-0"]{
+      color: white !important;
+    }
+
+  }
+}

@@ -1,0 +1,22 @@
+.photo-description {
+  padding: 10px;
+}
+
+.maps-container {
+  display: none;
+  agm-map {
+    height: 300px;
+    margin-top: 10px;
+  }
+}
+
+.btn-maps {
+  margin: 0 10px 10px auto;
+}
+
+@media screen and (min-width: 650px) {
+  .maps-container {
+    display: flex;
+    flex-direction: column;
+  }
+}

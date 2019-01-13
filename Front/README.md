@@ -1,27 +1,13 @@
-# Front
+# SwingGallery
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
+## Error handling
 
-## Development server
+Error handler is overwritten with new implementation, i didn't make server but i
+ implemented some mock observable which should send logs to server ( request is not send not to throw error ).
+ Http requests ( flickr type of errors ) are handled in interceptor, which shows messages via toastr. 
+ 
+## Loading indicators
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Loading indicator is handled from component level, but it is also possible to manage that via interceptor and communication
+services and one global component instance.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

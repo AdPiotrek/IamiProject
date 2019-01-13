@@ -1,0 +1,23 @@
+<div class="graph-container" *ngIf="days[0].series.length !== 0">
+  SUNS GOES DOWN
+
+  <ngx-charts-line-chart [results]="days"
+                         [xAxis]="true"
+                         [yAxis]="true"
+                         [showGridLines]="false"
+                          [autoScale]="true"
+                          [xAxisTickFormatting]="xFormatter"
+                          [yAxisTickFormatting]="xFormatter">
+    <ng-template #tooltipTemplate let-model="model">
+      Godzina: {{
+        xFormatter(model.value)
+      }}
+      <br>
+      Dzień: {{
+        model.name
+      }}
+    </ng-template>
+  </ngx-charts-line-chart>
+
+
+</div>

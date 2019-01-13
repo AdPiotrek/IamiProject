@@ -1,0 +1,33 @@
+<div class="photo-upload-form">
+  <input-file
+    fileAccept="image/*"
+    placeholder="Dodaj zdjęcie"
+    [(ngModel)]="file"
+    (rejectedFile)="fileRejected()"
+    (acceptedFile)="fileAccepted()"
+    class="input-file">
+  </input-file>
+
+  <mat-form-field>
+    <input matInput type="text" placeholder="Lokalizacja" [(ngModel)]="localization">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="localizeMe()">
+      <mat-icon>location_on</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <textarea matInput placeholder="Opis" [(ngModel)]="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input type="time" matInput placeholder="Godzina" [(ngModel)]="time"/>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Data" [(ngModel)]="date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" class="upload-button" (click)="fileAccepted()">Dodaj !</button>
+</div>
