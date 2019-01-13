@@ -12,10 +12,25 @@ public class AlmostFullBlobDTO {
     private BigDecimal latitude;
     private BigDecimal longtitude;
     private String userName;
+    private String userSurname;
     private int userId;
     private Date date;
     private String time;
 
+
+    public AlmostFullBlobDTO(int blobid, String name, String description, String localizationUF, BigDecimal latitude, BigDecimal longtitude, String userName, String userSurname, int userId, Date date, String time) {
+        this.blobid = blobid;
+        this.name = name;
+        this.description = description;
+        this.localizationUF = localizationUF;
+        this.latitude = latitude;
+        this.longtitude = longtitude;
+        this.userName = userName;
+        this.userSurname = userSurname;
+        this.userId = userId;
+        this.date = date;
+        this.time = time;
+    }
 
     public int getBlobid() {
         return blobid;
@@ -73,6 +88,14 @@ public class AlmostFullBlobDTO {
         this.userName = userName;
     }
 
+    public String getUserSurname() {
+        return userSurname;
+    }
+
+    public void setUserSurname(String userSurname) {
+        this.userSurname = userSurname;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -94,19 +117,6 @@ public class AlmostFullBlobDTO {
     }
 
     public void setTime(String time) {
-        this.time = time;
-    }
-
-    public AlmostFullBlobDTO(int blobid, String name, String description, String localizationUF, BigDecimal latitude, BigDecimal longtitude, String userName, int userId, Date date, String time) {
-        this.blobid = blobid;
-        this.name = name;
-        this.description = description;
-        this.localizationUF = localizationUF;
-        this.latitude = latitude;
-        this.longtitude = longtitude;
-        this.userName = userName;
-        this.userId = userId;
-        this.date = date;
         this.time = time;
     }
 }
