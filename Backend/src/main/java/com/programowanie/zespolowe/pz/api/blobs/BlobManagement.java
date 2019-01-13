@@ -92,12 +92,10 @@ public class BlobManagement implements BlobAPI{
     }
 
     @Override
-    public ResponseEntity getBlobsNamesAndIds(@RequestHeader HttpHeaders headers){
-        User user = commonUtil.getUserFromHeader(headers);
-        if(user == null){
-            return commonUtil.getResponseEntity("User not found.", HttpStatus.NOT_FOUND);
-        }
-        List<FilteredBlobDTO> test = blobDAO.getOnlyIdAndNameForUser(user);
+    public ResponseEntity getBlobsNamesAndIdsForUser(@PathVariable(value = "userId") int userId,
+                                                     @PathVariable(value = "pageNumber") int pageNumber,
+                                                     @RequestHeader HttpHeaders headers){
+        List<AlmostFullBlobDTO> test = blobDAO.getAlmostFullBlobForUser(new PageRequest(pageNumber, 40), userId);
         return commonUtil.getListResponseEntity(test, HttpStatus.OK);
     }
 

@@ -49,9 +49,11 @@ public interface BlobAPI {
      *
      * @param headers - nagłówek
      */
-    @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/user/{userId}/{pageNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity getBlobsNamesAndIds(@RequestHeader HttpHeaders headers);
+    ResponseEntity getBlobsNamesAndIdsForUser(@PathVariable(value = "userId") int userId,
+                                       @PathVariable(value = "pageNumber") int pageNumber,
+                                       @RequestHeader HttpHeaders headers);
 
     @RequestMapping(value = "/get/{pageNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
