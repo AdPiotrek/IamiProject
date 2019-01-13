@@ -14,7 +14,8 @@ public class SecurityConstants {
             "/swagger-ui.html",
             "/webjars/**",
             "/user/login",
-            "/user/register"
+            "/user/register",
+            "/blob/get/{pageNumber}"
     };
 
 }

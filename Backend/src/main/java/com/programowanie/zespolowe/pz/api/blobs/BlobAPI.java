@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
+
 /**
  * Api do zarządzania plikami
  */
@@ -23,6 +25,10 @@ public interface BlobAPI {
     @ResponseBody
     ResponseEntity create(@RequestBody MultipartFile file,
                           @RequestParam("fileName") String fileName,
+                          @RequestParam("description") String description,
+                          @RequestParam("localizationUF") String localizationUF,
+                          @RequestParam("latitude") BigDecimal latitude,
+                          @RequestParam("longtitude") BigDecimal longtitude,
                           @RequestHeader HttpHeaders headers);
 
     /**
@@ -42,4 +48,8 @@ public interface BlobAPI {
     @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     ResponseEntity getBlobsNamesAndIds(@RequestHeader HttpHeaders headers);
+
+    @RequestMapping(value = "/get/{pageNumber}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    ResponseEntity getAllBlobs(@PathVariable(value = "pageNumber") int pageNumber);
 }

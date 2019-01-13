@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -28,21 +29,61 @@ public class Blob implements Serializable {
 	private byte[] data;
 
 	private String name;
+	private String description;
+	private String localizationUF;
+	@Column(precision = 10, scale = 8)
+	private BigDecimal latitude;
+	@Column(precision = 11, scale = 8)
+	private BigDecimal longtitude;
+
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name = "user", referencedColumnName = "userid", nullable = false)
+	@JsonIgnoreProperties({"blob", "blobs"})
 	@JsonIgnore
 	private User user;
 
 	@OneToMany(mappedBy = "blob")
 	@Basic
-	@JsonIgnoreProperties("blob")
+	@JsonIgnoreProperties({"blob", "blobs"})
 	@Column(name = "histories")
 	@JsonIgnore
 	private List<History> histories;
 
 	public Blob() {
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getLocalizationUF() {
+		return localizationUF;
+	}
+
+	public void setLocalizationUF(String localizationUF) {
+		this.localizationUF = localizationUF;
+	}
+
+	public BigDecimal getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(BigDecimal latitude) {
+		this.latitude = latitude;
+	}
+
+	public BigDecimal getLongtitude() {
+		return longtitude;
+	}
+
+	public void setLongtitude(BigDecimal longtitude) {
+		this.longtitude = longtitude;
 	}
 
 	public List<History> getHistories() {
