@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.UniqueElements;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 
@@ -35,6 +36,8 @@ public class Blob implements Serializable {
 	private BigDecimal latitude;
 	@Column(precision = 11, scale = 8)
 	private BigDecimal longtitude;
+	private Date date;
+	private String time;
 
 
 	//bi-directional many-to-one association to User
@@ -52,6 +55,34 @@ public class Blob implements Serializable {
 	private List<History> histories;
 
 	public Blob() {
+	}
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public int getBlobid() {
+		return blobid;
+	}
+
+	public void setBlobid(int blobid) {
+		this.blobid = blobid;
+	}
+
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getDescription() {
@@ -86,44 +117,35 @@ public class Blob implements Serializable {
 		this.longtitude = longtitude;
 	}
 
-	public List<History> getHistories() {
-		return this.histories;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setHistories(List<History> histories) {
-		this.histories = histories;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
-	public int getBlobid() {
-		return this.blobid;
+	public String getTime() {
+		return time;
 	}
 
-	public void setBlobid(int blobid) {
-		this.blobid = blobid;
-	}
-
-	public byte[] getData() {
-		return this.data;
-	}
-
-	public void setData(byte[] data) {
-		this.data = data;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 	public User getUser() {
-		return this.user;
+		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
 	}
 
+	public List<History> getHistories() {
+		return histories;
+	}
+
+	public void setHistories(List<History> histories) {
+		this.histories = histories;
+	}
 }
