@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,8 @@ import { AuthService } from '../../services/auth/auth.service';
 export class AuthGuard implements CanActivate {
 
   constructor(private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private http: HttpClient) {
 
   }
 
@@ -17,22 +20,19 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     if (this.authService.token) {
-      return true;
-    } else if (this.authService.token) {
-      this.saveTokenFromSession();
-      return true;
+      return this.http.get('https://localhost:8443/user/get')
+        .pipe(
+          tap((req) => {
+            this.authService.user = req;
+          }),
+          map(() => true),
+          catchError(() => of(false))
+        );
     } else {
       this.router.navigate(['']);
       return false;
     }
   }
 
-  saveTokenFromSession() {
-    const token: string = sessionStorage.getItem('authToken');
-    this.saveToken(token);
-  }
 
-  saveToken(token: string): void {
-    this.authService.token = token;
-  }
 }

@@ -22,7 +22,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class PhotoComponent implements OnInit {
   @Input() photo: Photo;
   @Input() showDetails = true;
+  @Input() hasDelete = false;
   @Output() authorClicked = new EventEmitter<string>();
+  @Output() deleteClicked = new EventEmitter();
   loaded = false;
 
   photoSrc: Observable<any>;
@@ -48,6 +50,10 @@ export class PhotoComponent implements OnInit {
 
   onAuthorClicked() {
     this.authorClicked.emit(this.photo.userId);
+  }
+
+  onXClicked() {
+    this.deleteClicked.emit(this.photo.blobid);
   }
 
 

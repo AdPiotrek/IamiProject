@@ -1,13 +1,20 @@
 <div class="sub-header">
   <h2 class="author-description">
-    <ng-container *ngIf="photos">
-      Author: {{photos[0].username}}
+    <ng-container *ngIf="+userId === +loggedUserId">
+      Twój profil
+    </ng-container>
+    <ng-container *ngIf="+userId !== +loggedUserId">
+      Nazwa użytkownika
     </ng-container>
   </h2>
-  <a class="btn btn-primary" routerLink="/dogs">Dogs photos</a>
+  <h5>
+    Liczba zdjęć: {{photos.length}}
+  </h5>
 </div>
 <app-photos [photos]="photos"
             infiniteScroll
             (scrolled)="loadMorePhotos()"
             [fromRoot]="true"
+            [hasDelete]="true"
+            (deleteClicked)="deleteBlob($event)"
 ></app-photos>

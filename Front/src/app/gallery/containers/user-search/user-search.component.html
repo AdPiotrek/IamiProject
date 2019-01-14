@@ -1,0 +1,18 @@
+<div class="flex-container">
+  <form action="" [formGroup]="searchForm">
+    <mat-form-field class="example-full-width">
+      <input matInput name="email" placeholder="Email" formControlName="search" required type="text"/>
+    </mat-form-field>
+  </form>
+  <ng-container *ngIf="authors | async as gottenAuthors">
+    <mat-card *ngFor="let author of gottenAuthors" (click)="goToUserProfile(author.userid)">
+      <mat-card-title>
+        {{author.name}} {{author.surname}}
+      </mat-card-title>
+      <mat-card-content>
+        {{author.email}}
+      </mat-card-content>
+    </mat-card>
+    <h2 *ngIf="gottenAuthors.length === 0"> Nie znaleziono użytkowników spełniających kryteria</h2>
+  </ng-container>
+</div>

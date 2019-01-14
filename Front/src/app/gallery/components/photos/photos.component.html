@@ -2,6 +2,7 @@
   transitionDuration: 0
 }">
   <ngxMasonryItem class="masonry-item" *ngFor="let photo of photos; trackBy: photoIdentity">
-    <app-photo [photo]="photo" (click)="onPhotoClicked(photo)" (authorClicked)="onAuthorClicked($event)" [showDetails]="showDetails"> </app-photo>
+    <app-photo [photo]="photo" (click)="onPhotoClicked(photo)" (authorClicked)="onAuthorClicked($event)" [showDetails]="showDetails"
+               [hasDelete]="hasDelete" (deleteClicked)="onDeleteClicked($event)"></app-photo>
   </ngxMasonryItem>
 </ngx-masonry>

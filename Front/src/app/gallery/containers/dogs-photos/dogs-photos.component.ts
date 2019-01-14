@@ -80,7 +80,6 @@ export class DogsPhotosComponent implements OnInit {
   }
 
   seeAuthorPhotos(authorId) {
-    console.log(authorId)
     this.router.navigateByUrl(`author/${ authorId }`);
   }
 

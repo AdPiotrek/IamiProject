@@ -7,6 +7,8 @@ import { map, switchMap, tap } from 'rxjs/operators';
 
 import { Photo } from '../../shared/models/photo';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-author-photos',
@@ -18,9 +20,13 @@ export class AuthorPhotosComponent implements OnInit {
   currentPage = 0;
   allPages: number;
   photos: Photo[];
+  userId;
+  loggedUserId;
 
   constructor(private httpClient: HttpClient,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private authService: AuthService,
+              private toastService: ToastrService) {
   }
 
   ngOnInit() {
@@ -31,7 +37,11 @@ export class AuthorPhotosComponent implements OnInit {
     this.isLoading = true;
     this.activatedRoute.params
       .pipe(
-        switchMap((params) => this.httpClient.get(`https://localhost:8443/blob/user/${ params.id }/${ this.currentPage }`)),
+        switchMap((params) => {
+          this.userId = params.id;
+          this.loggedUserId = this.authService.user.userid;
+          return this.httpClient.get(`https://localhost:8443/blob/user/${ params.id }/${ this.currentPage }`);
+        }),
         tap((photosReq) => {
           this.isLoading = false;
           console.log(photosReq);
@@ -43,6 +53,17 @@ export class AuthorPhotosComponent implements OnInit {
 
   loadMorePhotos() {
 
+  }
+
+  deleteBlob(id) {
+    console.log('[DELETE BLOB]', id)
+    this.httpClient.delete(`https://localhost:8443/blob/${ id }`)
+      .subscribe(() => {
+          this.toastService.success('Zdjęcie usunięte');
+        },
+        () => {
+          this.toastService.error('Wystąpił błąd spróbuj ponownie później')
+        });
   }
 
 }

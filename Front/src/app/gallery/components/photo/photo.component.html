@@ -2,6 +2,7 @@
   <img class="img"
        [src]="src"/>
   <ng-container *ngIf="showDetails">
+    <mat-icon class="delete" (click)="onXClicked()">close</mat-icon>
     <div class="author" (click)="onAuthorClicked()">
       {{photo.userName}} {{photo.userSurname}}
     </div>
