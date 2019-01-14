@@ -15,7 +15,8 @@ public class SecurityConstants {
             "/webjars/**",
             "/user/login",
             "/user/register",
-            "/blob/get/{pageNumber}"
+            "/blob/get/{pageNumber}",
+            "/blob/{blobId}"
     };
 
 }
