@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 
 import { FlickSearchService } from '../../services/search/flick-search.service';
 
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable, pipe } from 'rxjs';
+import { finalize, map, tap } from 'rxjs/operators';
 
 import { Photo } from '../../shared/models/photo';
 import { DogsFilterValues } from '../../shared/models/dogs-filter-values';
@@ -21,6 +21,7 @@ export class DogsPhotosComponent implements OnInit {
   showModal = false;
   isMapOpen = false;
   currentPage = 1;
+  hasMore = true;
   allPages: number;
   photos: any[] = [];
   photoToShow: Photo;
@@ -56,26 +57,20 @@ export class DogsPhotosComponent implements OnInit {
     this.httpClient.get('https://localhost:8443/blob/get/0')
       .subscribe((resp: any) => {
         this.isLoading = false;
-        console.log(resp)
+        console.log(resp);
         this.photos = resp;
       });
   }
-  loadMorePhotos() {
-    if (this.allPages <= this.currentPage) {
-      return;
-    }
 
+  loadMorePhotos() {
     this.isLoading = true;
-    this.searchService.getMorePhotos(++this.currentPage)
+    this.httpClient.get(`https://localhost:8443/blob/get/${ ++this.currentPage }`)
       .pipe(
-        tap((photosReq) => {
-          this.isLoading = false;
-          this.currentPage = photosReq.photos.page;
-          this.allPages = photosReq.photos.pages;
-        }),
-        map((photosReq) => photosReq.photos.photo)
-      ).subscribe((photos) => {
-      this.photos = photos;
+      finalize(() => {
+        this.isLoading = false;
+      })
+    ).subscribe((photos: any) => {
+      this.photos = [...this.photos, ...photos];
     });
   }
 
@@ -84,7 +79,7 @@ export class DogsPhotosComponent implements OnInit {
   }
 
   showModalWithPhoto(photo: Photo) {
-    console.log(photo)
+    console.log(photo);
     this.photoToShow = photo;
     this.showModal = true;
   }
@@ -93,32 +88,4 @@ export class DogsPhotosComponent implements OnInit {
     this.showModal = false;
   }
 
-  // openMaps() {
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     this.geoPosition = position;
-  //     this.isMapOpen = true;
-  //     this.pointers$ = this.searchService.getDogsLocalization(position)
-  //       .pipe(
-  //         map((dogs) => {
-  //           return dogs.map((dog) => {
-  //             return marker(latLng(+dog.latitude, +dog.longitude),
-  //               {
-  //                 title: dog.title, icon: icon({ iconUrl: 'marker-icon.png' })
-  //               });
-  //           });
-  //         })
-  //       );
-  //
-  //     this.options.center = latLng(position.coords.latitude, position.coords.longitude);
-  //
-  //   }, err => {
-  //     if (err.code === 1) {
-  //       alert('You denied permissions, try to reset consents in your browser');
-  //     }
-  //   });
-  // }
-
-  // closeMaps() {
-  //   this.isMapOpen = false;
-  // }
 }

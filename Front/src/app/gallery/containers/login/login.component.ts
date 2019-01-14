@@ -33,12 +33,13 @@ export class LoginComponent implements OnInit {
       .pipe(
         switchMap((resp: any) => {
           this.authService.token = resp.Authorization;
+          this.router.navigateByUrl('dogs');
           return this.httpClient.get('https://localhost:8443/user/get');
         })
       )
       .subscribe((resp: any) => {
-        this.authService.user = resp;
-      }
+          this.authService.user = resp;
+        }
       );
   }
 

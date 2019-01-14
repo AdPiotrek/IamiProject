@@ -52,12 +52,25 @@ export class AuthorPhotosComponent implements OnInit {
   }
 
   loadMorePhotos() {
-
+    this.activatedRoute.params
+      .pipe(
+        switchMap((params) => {
+          this.userId = params.id;
+          this.loggedUserId = this.authService.user.userid;
+          return this.httpClient.get(`https://localhost:8443/blob/user/${ params.id }/${ this.currentPage }`);
+        }),
+        tap((photosReq) => {
+          this.isLoading = false;
+          console.log(photosReq);
+        }),
+      ).subscribe((photos: Photo[]) => {
+      this.photos = [...this.photos, ...photos];
+    });
   }
 
   deleteBlob(id) {
     console.log('[DELETE BLOB]', id)
-    this.httpClient.delete(`https://localhost:8443/blob/${ id }`)
+    this.httpClient.delete(`https://localhost:8443/blob/delete/${ id }`)
       .subscribe(() => {
           this.toastService.success('Zdjęcie usunięte');
         },

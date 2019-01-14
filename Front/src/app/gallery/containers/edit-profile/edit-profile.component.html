@@ -1,0 +1,93 @@
+<!--<mat-card>-->
+<!--<mat-card-title>-->
+<!--Zarejestruj się !-->
+<!--</mat-card-title>-->
+<!--<mat-card-content>-->
+<!--<form [formGroup]="loginForm">-->
+
+<!--<mat-form-field class="example-full-width">-->
+<!--<input matInput name="email" placeholder="Email" formControlName="email" required type="email"/>-->
+<!--</mat-form-field>-->
+
+<!--<mat-form-field class="example-full-width">-->
+<!--<input matInput placeholder="Hasło" formControlName="password" required minlength="6" type="password" #pw/>-->
+<!--<mat-error *ngIf="loginForm.get('password').hasError('required')">-->
+<!--Hasło jest wymagane.-->
+<!--</mat-error>-->
+<!--</mat-form-field>-->
+
+<!--<button mat-raised-button color="accent"-->
+<!--[disabled]="loginForm.invalid"-->
+<!--(click)="loginUser()">Zaloguj się !</button>-->
+<!--</form>-->
+<!--</mat-card-content>-->
+
+<!--</mat-card>-->
+<mat-accordion>
+  <mat-expansion-panel>
+
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Imię i nazwisko
+      </mat-panel-title>
+      <mat-panel-description>
+        Zmień swoje dane
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <input matInput placeholder="Imię" [(ngModel)]="user.name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Nazwisko" [(ngModel)]="user.surname">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="saveData()">Zapisz</button>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Email
+      </mat-panel-title>
+      <mat-panel-description>
+        Zmień adres email
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <input matInput placeholder="Email" [(ngModel)]="user.email">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Powtórz email" [(ngModel)]="emailRepeated">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="user.email !== '' && user.email !== emailRepeated" (click)="saveEmail()">Zapisz</button>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Hasło
+      </mat-panel-title>
+      <mat-panel-description>
+        Zmień hasło
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <input matInput placeholder="Nowe hasło" [(ngModel)]="password">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Powtórz nowe hasło" [(ngModel)]="passwordRepeated">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="password !== '' && password !== passwordRepeated" (click)="savePassword()">Zapisz</button>
+  </mat-expansion-panel>
+
+
+
+</mat-accordion>

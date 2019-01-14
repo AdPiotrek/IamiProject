@@ -29,7 +29,7 @@ import {
   MatIconModule,
   MatListModule,
   MatInputModule,
-  MatDatepickerModule, MatNativeDateModule, MatCardModule
+  MatDatepickerModule, MatNativeDateModule, MatCardModule, MatExpansionModule
 } from '@angular/material';
 import { PhotoUploadComponent } from './gallery/containers/photo-upload/photo-upload.component';
 import { CommonModule } from '@angular/common';
@@ -40,6 +40,7 @@ import { LoginComponent } from './gallery/containers/login/login.component';
 import { RegisterComponent } from './gallery/containers/register/register.component';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { UserSearchComponent } from './gallery/containers/user-search/user-search.component';
+import { EditProfileComponent } from './gallery/containers/edit-profile/edit-profile.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { UserSearchComponent } from './gallery/containers/user-search/user-searc
     LoginComponent,
     RegisterComponent,
     UserSearchComponent,
+    EditProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -84,7 +86,8 @@ import { UserSearchComponent } from './gallery/containers/user-search/user-searc
     MatNativeDateModule,
     NgxChartsModule,
     MatCardModule,
-    NgxMasonryModule
+    NgxMasonryModule,
+    MatExpansionModule
   ],
   providers: [
     {
