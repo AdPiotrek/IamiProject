@@ -44,7 +44,7 @@ public interface UserManagementAPI {
     public @ResponseBody
     ResponseEntity getAllUsers(@RequestParam(value = "name", required=false, defaultValue = "") String name, @RequestHeader HttpHeaders headers);
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/edit", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity editUser(@RequestParam(value = "name", required=false, defaultValue = "") String name,
                             @RequestParam(value = "surname", required=false, defaultValue = "") String surname,

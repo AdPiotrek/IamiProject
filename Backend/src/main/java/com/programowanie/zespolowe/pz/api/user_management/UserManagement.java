@@ -126,14 +126,26 @@ public class UserManagement implements UserManagementAPI {
                                    @RequestParam(value = "email", required=false, defaultValue = "") String email,
                                    @RequestParam(value = "password", required=false, defaultValue = "") String password,
                                    @RequestHeader HttpHeaders headers){
-//        Optional<User> user = userDAO.findById();
-//        if(user.isPresent()) {
-//            User userGet = user.get();
-//            FilteredUserDTO filteredUserDTO = new FilteredUserDTO(userGet.getUserid(), userGet.getEmail(), userGet.getName(), userGet.getSurname());
-//            return ResponseEntity.status(HttpStatus.OK).body(filteredUserDTO);
-//        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
+        User user = commonUtil.getUserFromHeader(headers);
+        if (user == null) {
+            return commonUtil.getResponseEntity("User not found.", HttpStatus.NOT_FOUND);
+        }
+
+        if(name != null && !name.isEmpty()){
+            user.setName(name);
+        }
+        if(surname != null && !surname.isEmpty()){
+            user.setSurname(surname);
+        }
+        if(email != null && !email.isEmpty()){
+            user.setEmail(email);
+        }
+        if(password != null && !password.isEmpty()){
+            String passwordHashed = new BCryptPasswordEncoder().encode(password);
+            user.setPassword(passwordHashed);
+        }
+        userDAO.save(user);
+        return ResponseEntity.status(HttpStatus.OK).body("User data changed.");
     }
 
 
