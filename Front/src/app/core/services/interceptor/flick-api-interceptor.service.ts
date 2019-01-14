@@ -19,18 +19,22 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.authService.token) {
-      console.log(this.authService.token)
-      const reqWithToken = req.clone({
-        setHeaders: {
-          'Authorization': this.authService.token
-        }
-      });
-      return next.handle(reqWithToken).pipe(
-        catchError((err) => {
-          this.toastService.error('Żadanie nie powiodło się, jesli nie ma dalszych instrukcji skontaktuj sie z administratorem');
-          return throwError(err);
-        })
-      );
+      if (req.url.includes('localhost')) {
+        const reqWithToken = req.clone({
+          setHeaders: {
+            'Authorization': this.authService.token
+          }
+        });
+        return next.handle(reqWithToken).pipe(
+          catchError((err) => {
+            this.toastService.error('Żadanie nie powiodło się, jesli nie ma dalszych instrukcji skontaktuj sie z administratorem');
+            return throwError(err);
+          })
+        );
+      }
+
+      return next.handle(req);
+
     } else {
       return next.handle(req);
     }

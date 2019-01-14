@@ -17,7 +17,14 @@
     <!--</div>-->
   <!--</ng-container>-->
 <!--</div>-->
-<app-photos [photos]="photos" (photoClicked)="showModalWithPhoto($event)" (authorClicked)="seeAuthorPhotos($event)" infiniteScroll [fromRoot]="true" (scrolled)="loadMorePhotos()"></app-photos>
+<app-photos [photos]="photos"
+            (photoClicked)="showModalWithPhoto($event)"
+            (authorClicked)="seeAuthorPhotos($event)"
+            infiniteScroll
+            [fromRoot]="true"
+            (scrolled)="loadMorePhotos()">
+
+</app-photos>
 
 <div *ngIf="photos && photos.length === 0 ">
   There are no photos matching your filters

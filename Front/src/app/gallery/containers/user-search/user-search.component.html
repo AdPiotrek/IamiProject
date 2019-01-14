@@ -1,7 +1,7 @@
 <div class="flex-container">
   <form action="" [formGroup]="searchForm">
     <mat-form-field class="example-full-width">
-      <input matInput name="email" placeholder="Email" formControlName="search" required type="text"/>
+      <input matInput name="email" placeholder="Imię i nazwisko" formControlName="search" required type="text"/>
     </mat-form-field>
   </form>
   <ng-container *ngIf="authors | async as gottenAuthors">

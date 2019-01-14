@@ -10,6 +10,7 @@ import { Photo } from '../../shared/models/photo';
 import { DogsFilterValues } from '../../shared/models/dogs-filter-values';
 import { latLng, marker, tileLayer, icon, Marker } from 'leaflet';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-dogs-photos',
@@ -44,7 +45,8 @@ export class DogsPhotosComponent implements OnInit {
 
   constructor(private searchService: FlickSearchService,
               private router: Router,
-              private httpClient: HttpClient) {
+              private httpClient: HttpClient,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -66,15 +68,18 @@ export class DogsPhotosComponent implements OnInit {
     this.isLoading = true;
     this.httpClient.get(`https://localhost:8443/blob/get/${ ++this.currentPage }`)
       .pipe(
-      finalize(() => {
-        this.isLoading = false;
-      })
-    ).subscribe((photos: any) => {
+        finalize(() => {
+          this.isLoading = false;
+        })
+      ).subscribe((photos: any) => {
       this.photos = [...this.photos, ...photos];
     });
   }
 
   seeAuthorPhotos(authorId) {
+    if (!this.authService.user) {
+      return;
+    }
     this.router.navigateByUrl(`author/${ authorId }`);
   }
 

@@ -9,6 +9,7 @@ import { Photo } from '../../shared/models/photo';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-author-photos',
@@ -22,6 +23,7 @@ export class AuthorPhotosComponent implements OnInit {
   photos: Photo[];
   userId;
   loggedUserId;
+  selectedUser: Observable<any>
 
   constructor(private httpClient: HttpClient,
               private activatedRoute: ActivatedRoute,
@@ -38,12 +40,14 @@ export class AuthorPhotosComponent implements OnInit {
     this.activatedRoute.params
       .pipe(
         switchMap((params) => {
+          this.selectedUser = this.httpClient.get(`https://localhost:8443/user/get/${ params.id }`);
           this.userId = params.id;
           this.loggedUserId = this.authService.user.userid;
           return this.httpClient.get(`https://localhost:8443/blob/user/${ params.id }/${ this.currentPage }`);
         }),
         tap((photosReq) => {
           this.isLoading = false;
+
           console.log(photosReq);
         }),
       ).subscribe((photos: Photo[]) => {
@@ -57,7 +61,7 @@ export class AuthorPhotosComponent implements OnInit {
         switchMap((params) => {
           this.userId = params.id;
           this.loggedUserId = this.authService.user.userid;
-          return this.httpClient.get(`https://localhost:8443/blob/user/${ params.id }/${ this.currentPage }`);
+          return this.httpClient.get(`https://localhost:8443/blob/user/${ params.id }/${ ++this.currentPage }`);
         }),
         tap((photosReq) => {
           this.isLoading = false;
@@ -69,13 +73,13 @@ export class AuthorPhotosComponent implements OnInit {
   }
 
   deleteBlob(id) {
-    console.log('[DELETE BLOB]', id)
+    console.log('[DELETE BLOB]', id);
     this.httpClient.delete(`https://localhost:8443/blob/delete/${ id }`)
       .subscribe(() => {
           this.toastService.success('Zdjęcie usunięte');
         },
         () => {
-          this.toastService.error('Wystąpił błąd spróbuj ponownie później')
+          this.toastService.error('Wystąpił błąd spróbuj ponownie później');
         });
   }
 

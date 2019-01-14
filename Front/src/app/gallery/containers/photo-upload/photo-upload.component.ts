@@ -54,6 +54,7 @@ export class PhotoUploadComponent implements OnInit {
             this.localization = resp.results[0].components.city;
           },
           (err) => {
+            console.log(err);
             this.toastService.error('Nie udało się ustalić twojej lokalizacji !');
           }
         );
@@ -76,7 +77,7 @@ export class PhotoUploadComponent implements OnInit {
 
     this.httpClient.post(`https://localhost:8443/blob`, wrappedFile, { params })
       .subscribe((resp) => {
-          console.log(resp);
+          this.toastService.success('Plik dodany pomyślnie');
         },
         (err) => {
           if (err.status === 409) {

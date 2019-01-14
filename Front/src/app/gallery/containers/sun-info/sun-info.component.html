@@ -1,5 +1,8 @@
+<div class="header">
+  <h2> Dzisiejsza złota godzina zaczyna się o: {{goldenHour | date:'HH:mm'}}</h2>
+  <h2> Dzisiejsza niebieska godzina zaczyna się o: {{blueHour | date:'HH:mm'}}</h2>
+</div>
 <div class="graph-container" *ngIf="days[0].series.length !== 0">
-  SUNS GOES DOWN
 
   <ngx-charts-line-chart [results]="days"
                          [xAxis]="true"

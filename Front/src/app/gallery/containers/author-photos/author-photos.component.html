@@ -4,7 +4,9 @@
       Twój profil
     </ng-container>
     <ng-container *ngIf="+userId !== +loggedUserId">
-      Nazwa użytkownika
+      <div *ngIf="selectedUser | async as user">
+        {{user.name }} {{user.surname}}
+      </div>
     </ng-container>
   </h2>
   <h5>

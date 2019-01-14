@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile',
@@ -19,7 +20,8 @@ export class EditProfileComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private httpClient: HttpClient,
-              private toastService: ToastrService) {
+              private toastService: ToastrService,
+              private router: Router) {
 
   }
 
@@ -31,12 +33,9 @@ export class EditProfileComponent implements OnInit {
     const params = new HttpParams().append('email', this.user.email);
     this.httpClient.put(`https://localhost:8443/user/edit?name=&password=&surname=`, {}, { params, responseType: 'text' })
       .subscribe(() => {
-        this.toastService.success('Dane zmienione');
+        this.toastService.success('Email zmieniony zaloguj się ponownie');
 
-        this.authService.user = {
-          ...this.authService.user,
-          email: this.user.email
-        };
+        this.logout();
       });
   }
 
@@ -61,7 +60,13 @@ export class EditProfileComponent implements OnInit {
       .append('password', this.password);
     this.httpClient.patch(`https://localhost:8443/user/edit?&password=&email=`, {}, { params, responseType: 'text' })
       .subscribe(() => {
-        this.toastService.success('Dane zmienione');
+        this.toastService.success('Hasło zmienione, zaloguj się ponownie');
       });
+  }
+
+  logout() {
+    this.authService.user = null;
+    this.authService.token = null;
+    this.router.navigateByUrl('/dogs');
   }
 }

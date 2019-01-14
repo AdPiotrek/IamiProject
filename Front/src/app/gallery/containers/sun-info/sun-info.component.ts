@@ -10,6 +10,8 @@ import * as sunCalc from 'suncalc';
   providers: [DatePipe]
 })
 export class SunInfoComponent implements OnInit {
+  goldenHour;
+  blueHour;
   days = [
     {
       name: 'Golden Hour',
@@ -32,7 +34,8 @@ export class SunInfoComponent implements OnInit {
 
     navigator.geolocation.getCurrentPosition(({ coords }) => {
       const newDate = new Date();
-      console.log(sunCalc.getTimes(new Date(newDate.getFullYear(), newDate.getMonth(), 1), coords.latitude, coords.longitude));
+      this.goldenHour = sunCalc.getTimes(new Date(), coords.latitude, coords.longitude).goldenHour;
+      this.blueHour = sunCalc.getTimes(new Date(), coords.latitude, coords.longitude).goldenHourEnd;
       const numberOfDaysInMonth = this.getDaysInMonth(newDate.getFullYear(), newDate.getMonth());
       for (let i = 1; i <= numberOfDaysInMonth; i++) {
         this.days[0].series.push({
@@ -51,6 +54,7 @@ export class SunInfoComponent implements OnInit {
         });
       }
     });
+
 
 
   }

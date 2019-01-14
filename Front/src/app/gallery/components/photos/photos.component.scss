@@ -12,4 +12,17 @@ ngx-masonry {
   width: 32%;
 }
 
+@media (max-width: 500px) {
+  .masonry-item {
+    width: 100%;
+  }
+}
+
+
+@media (min-width: 501px) and (max-width: 800px) {
+  .masonry-item {
+    width: 49%;
+  }
+}
+
 
